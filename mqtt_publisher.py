@@ -19,10 +19,10 @@ FILE_TOPIC_BASE = os.getenv("FILE_TOPIC_BASE", "fileTransfer")
 ACK_TOPIC_BASE = os.getenv("ACK_TOPIC_BASE", "fileAck")
 
 FILE_RUN_PLAN = [
-    ("1MB", 10000),
+    ("100B", 10000),
     ("10KB", 1000),
-    ("10MB", 100),
-    ("100B", 10),
+    ("1MB", 100),
+    ("10MB", 10),
 ]
 
 RESULTS_CSV = os.getenv("RESULTS_CSV", f"./results_mqtt_qos{QOS}.csv")
@@ -123,7 +123,7 @@ def main():
     finally:
         client.loop_stop()
         client.disconnect()
-        print(f"[{ts()}] 🔌 Disconnected.")
+        print(f"[{ts()}] Disconnected.")
 
 if __name__ == "__main__":
     main()
