@@ -39,7 +39,7 @@ async def fetch_file(uri, save_path=None):
         print("Error while receiving the data", e)
         return None, None, None 
 
-async def run_experiment(uri, num_transfers, file_name, file_path_to_save):
+async def run_experiment(uri, num_transfers, file_name, file_path_to_save=None):
     print(f"\nStarting experiment: {file_name} x {num_transfers} transfers")
     
     times = []
@@ -63,34 +63,35 @@ async def run_experiment(uri, num_transfers, file_name, file_path_to_save):
     
         
 async def main():
-    server_ip = "localhost:5683"
-    transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/100B', "transfered_files/100BCopy")
-    print("This is transfered time:", transfer_time)
+    server_ip = "172.20.10.3:5683"
+    # transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB', "transfered_files/10MBCopy")
+    # transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB')
+    # print("This is transfered time:", transfer_time)
     
-    # csv_filename = "result.csv"
+    csv_filename = "result.csv"
     
-    # with open(csv_filename, 'w', newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(['File', 'Transfer#', 'Time(s)', 'FileSize(bytes)', 'Throughput(bytes/s)'])
+    with open(csv_filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['File', 'Transfer#', 'Time(s)', 'FileSize(bytes)', 'Throughput(bytes/s)'])
         
-    #     experiments = [
-    #         (f'coap://{server_ip}/100B', 10000, "100B"),
-    #         (f'coap://{server_ip}/10KB', 1000, "10KB"),
-    #         (f'coap://{server_ip}/1MB', 100, "1MB"),
-    #         (f'coap://{server_ip}/10MB', 10, "10MB")
-    #     ]
+        experiments = [
+            (f'coap://{server_ip}/100B', 10000, "100B"),
+            (f'coap://{server_ip}/10KB', 1000, "10KB"),
+            (f'coap://{server_ip}/1MB', 100, "1MB"),
+            (f'coap://{server_ip}/10MB', 10, "10MB")
+        ]
         
-    #     for uri, num_transfers, file_name in experiments:
-    #         times, throughputs, file_sizes = await run_experiment(uri, num_transfers, file_name, )
+        for uri, num_transfers, file_name in experiments:
+            times, throughputs, file_sizes = await run_experiment(uri, num_transfers, file_name)
             
-    #         for i in range(len(times)):
-    #             writer.writerow([
-    #                 file_name,
-    #                 i + 1,
-    #                 times[i],
-    #                 file_sizes[i],
-    #                 throughputs[i]
-    #             ])
+            for i in range(len(times)):
+                writer.writerow([
+                    file_name,
+                    i + 1,
+                    times[i],
+                    file_sizes[i],
+                    throughputs[i]
+                ])
 
 if __name__ == "__main__":
     asyncio.run(main())
