@@ -12,9 +12,9 @@ load_dotenv()
 
 BROKER = os.getenv("MQTT_BROKER", "127.0.0.1")
 PORT = int(os.getenv("MQTT_PORT", "1883"))
-QOS = int(os.getenv("MQTT_QOS", "1"))      
+QOS = int(os.getenv("MQTT_QOS", "2"))      
 
-DATA_DIR = os.getenv("DATA_DIR", "./DataFiles")
+DATA_DIR = os.getenv("DATA_DIR", "./files")
 FILE_TOPIC_BASE = os.getenv("FILE_TOPIC_BASE", "fileTransfer")
 ACK_TOPIC_BASE = os.getenv("ACK_TOPIC_BASE", "fileAck")
 
@@ -34,7 +34,7 @@ def ts() -> str:
 
 # track ACKs by filename
 acks = set()
-
+  
 
 def on_connect(client: mqtt.Client, userdata, flags, rc):
     if rc == 0:
