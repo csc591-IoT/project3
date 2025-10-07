@@ -64,9 +64,9 @@ async def run_experiment(uri, num_transfers, file_name, file_path_to_save=None):
         
 async def main():
     server_ip = "172.20.10.3:5683"
-    # transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB', "transfered_files/10MBCopy")
-    # transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB')
-    # print("This is transfered time:", transfer_time)
+    transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB', "transfered_files/10MBCopy")
+    transfer_time, file_size, throughput = await fetch_file(f'coap://{server_ip}/10MB')
+    print("This is transfered time:", transfer_time)
     
     csv_filename = "result2.csv"
     
@@ -75,8 +75,8 @@ async def main():
         writer.writerow(['File', 'Transfer#', 'Time(s)', 'FileSize(bytes)', 'Throughput(bytes/s)'])
         
         experiments = [
-            # (f'coap://{server_ip}/100B', 10000, "100B"),
-            # (f'coap://{server_ip}/10KB', 1000, "10KB"),
+            (f'coap://{server_ip}/100B', 10000, "100B"),
+            (f'coap://{server_ip}/10KB', 1000, "10KB"),
             (f'coap://{server_ip}/1MB', 100, "1MB"),
             (f'coap://{server_ip}/10MB', 10, "10MB")
         ]
